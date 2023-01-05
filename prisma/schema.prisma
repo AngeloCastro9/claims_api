@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  id            Int          @unique @default(autoincrement())
+  name          String
+  email         String       @unique
+  password      String
+  resetPassCode String?      @unique
+  createdAt     DateTime?    @default(now())
+  disabledAt    DateTime?
+  status        verification @default(Activate)
+}
+
+model claims {
+  id          Int      @unique @default(autoincrement())
+  name        String
+  observation String?
+  price       Float
+  status      status   @default(Pending)
+  createdAt   DateTime @default(now())
+}
+
+enum verification {
+  Activate
+  Block
+}
+
+enum status {
+  Pending
+  Completed
+}
