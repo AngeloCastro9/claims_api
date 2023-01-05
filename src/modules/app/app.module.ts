@@ -5,9 +5,15 @@ import { AdminController } from '../admin/admin.controller';
 import { PrismaService } from '../../database/prisma.service';
 import { ConfigModule } from '@nestjs/config';
 import { AuthController } from '../auth/auth.controller';
+import { ClaimsModule } from '../claims/claims.module';
 
 @Module({
-  imports: [AdminModule, AuthModule, ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    AdminModule,
+    AuthModule,
+    ClaimsModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+  ],
   controllers: [AdminController, AuthController],
   providers: [PrismaService],
 })
