@@ -5,14 +5,10 @@ import {
 } from '@nestjs/common';
 import { admin, Prisma } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
-import { MailService } from '../mail/service/mail.service';
 
 @Injectable()
 export class AdminService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly mail: MailService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Prisma.adminCreateInput): Promise<admin> {
     const admin = await this.prisma.admin.findUnique({
@@ -26,8 +22,6 @@ export class AdminService {
     }
 
     const adminCreated = await this.prisma.admin.create({ data });
-
-    await this.mail.sendWelcome(data.email, data.name);
 
     delete adminCreated.password;
 
