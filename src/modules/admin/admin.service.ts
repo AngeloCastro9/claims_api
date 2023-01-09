@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  HttpException,
   Injectable,
   NotAcceptableException,
 } from '@nestjs/common';
@@ -18,7 +19,7 @@ export class AdminService {
     });
 
     if (admin) {
-      throw new BadRequestException('User already exists');
+      throw new HttpException('Usuário já cadastrado', 400);
     }
 
     const adminCreated = await this.prisma.admin.create({ data });
