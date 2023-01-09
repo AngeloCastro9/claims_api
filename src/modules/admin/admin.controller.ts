@@ -18,7 +18,7 @@ import { ParseCreateAdminPipe } from './pipes/parseCreateAdmin.pipe';
 export class AdminController {
   constructor(private adminService: AdminService) {}
 
-  @Post('/')
+  @Post()
   async create(@Body(new ParseCreateAdminPipe()) data: CreateAdminDto) {
     return {
       statusCode: HttpStatus.CREATED,
