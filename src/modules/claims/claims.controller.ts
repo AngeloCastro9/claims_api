@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ClaimsService } from './claims.service';
 import CreateClaimsDto from './dto/createClaims.dto';
 
@@ -9,5 +9,13 @@ export class ClaimsController {
   @Post()
   async create(@Body() data: CreateClaimsDto) {
     return await this.claimsService.create(data);
+  }
+
+  @Get()
+  async readAll(@Query() query: { take: string; skip: string }) {
+    return await this.claimsService.readAll(
+      Number(query.take),
+      Number(query.skip),
+    );
   }
 }
